@@ -14,4 +14,7 @@ jobs:
       - run: dart pub get
       # - run: dart test
       - run: dart test --file-reporter json:tests.json
-      - run: python dart_test_check.py & python sendtest.py ${{github.actor}} '${{github.repository}}'
+      - run: python dart_test_check.py
+      - run: |
+          CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }}) 
+          python test/sendtest.py ${{github.actor}} '${{github.repository}}' "$CHANGED_FILES"
