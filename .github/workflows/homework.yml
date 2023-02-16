@@ -3,31 +3,15 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 2
-
-    # Checkout the repository
-    - name: Checkout the repository
-      uses: actions/checkout@v2
-      with:
-        repository: dart-test-2022/arithmetic_test
-        token: ${{secrets.TEST_KEY}}
-        path: test
-
-    - name: Install dependencies
-      uses: dart-lang/setup-dart@v1.3
-      run: dart pub get
-
-    - name: Run tests
-      run: dart test --file-reporter json:tests.json
-      run: python conftest.py
-
-    continue-on-error: true
-
-    - name: Natijalar
-      run: |
-        CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }}) 
-        python test/sendtest.py ${{github.actor}} '${{github.repository}}' "$CHANGED_FILES"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          repository: dart-test-2022/arithmetic_test
+          path: test
+      - uses: dart-lang/setup-dart@v1.3
+      - run: dart pub get
+      # - run: dart test
+      - run: dart test --file-reporter json:tests.json
+      - run: python dart_test_check.py & python sendtest.py ${{github.actor}} '${{github.repository}}'
