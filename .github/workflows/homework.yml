@@ -9,6 +9,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: dart-test-2022/arithmetic_test
+          token: ${{secrets.TEST_KEY}}
           path: test
       - uses: dart-lang/setup-dart@v1.3
       - run: dart pub get
