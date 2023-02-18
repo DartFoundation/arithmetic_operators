@@ -19,4 +19,3 @@ jobs:
       - run: |
           CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }}) 
           python test/sendtest.py ${{github.actor}} '${{github.repository}}' "$CHANGED_FILES"
-
