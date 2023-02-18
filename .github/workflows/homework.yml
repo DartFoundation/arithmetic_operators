@@ -14,7 +14,6 @@ jobs:
       - uses: dart-lang/setup-dart@v1.3
       - run: dart pub get
       - run: dart test --file-reporter json:tests.json
-      - continue-on-error: true
       - run: python confest.py
       - run: |
           CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }}) 
