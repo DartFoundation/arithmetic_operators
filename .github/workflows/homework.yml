@@ -16,7 +16,7 @@ jobs:
       - name: run test
         run: dart test --file-reporter json:tests.json
         continue-on-error: true
-      - run: python confest.py
+      - run: python test/confest.py
       - run: |
           CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }}) 
           python test/sendtest.py ${{github.actor}} '${{github.repository}}' "$CHANGED_FILES"
